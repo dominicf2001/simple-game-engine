@@ -1,0 +1,10 @@
+﻿  spriteExample.cpp
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(48,21): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(48,14): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(50,20): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(50,13): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(52,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(52,13): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(54,20): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\SpriteExample\spriteExample.cpp(54,14): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  SpriteExample.vcxproj -> C:\Users\mbektic\Desktop\Game Programming Courses\Spring 2024\SpriteExample\x64\Debug\SpriteExample.exe
