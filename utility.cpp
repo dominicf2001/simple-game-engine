@@ -12,10 +12,17 @@
 // CAMERA
 // -----------
 
-void Camera::lookAt(GLfloat x, GLfloat y){     
-    // smooth the camera movement
-    GLfloat newX = this->x + (x - this->x) * .08f;    
-    GLfloat newY = this->y + (y - this->y) * .08f;    
+void Camera::lookAt(GLfloat x, GLfloat y, bool jump){     
+    GLfloat newX, newY = 0; 
+    if (jump){
+        newX = x;
+        newY = y;
+    }
+    else {
+        // smooth the camera movement
+        newX = this->x + (x - this->x) * .08f;    
+        newY = this->y + (y - this->y) * .08f;
+    }
 
     gluLookAt(newX, newY, 0.1, 
         newX, newY, 0, 
@@ -109,7 +116,7 @@ void drawAxis(GLfloat x, GLfloat y){
 // TEXTURE CONTROLLER
 // -----------
 
-TextureController::TextureController(vector<string>& textureFileNames){
+TextureController::TextureController(const vector<string>& textureFileNames){
   for (auto textureFileName : textureFileNames){
     addTexture(textureFileName);
   } 

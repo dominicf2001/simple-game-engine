@@ -2,29 +2,34 @@
 
 #include "utility.hpp"
 #include <GL/gl.h>
+#include <functional>
 #include <vector>
+#include <string>
 #include <initializer_list>
 
-using std::vector;
+using std::vector; using::string;
 
 class Panel;
 class Button {  
 public:
   friend class Panel;
-  Button(void (*onClick)(Button& thisBtn)) : 
-      x(0), y(0), sizeX(.005), sizeY(.005), clicked(false), onClick(onClick), panel(nullptr) {
+  Button(std::function<void(Button&)> onClick, string text="") : 
+      x(0), y(0), sizeX(20), sizeY(20), 
+      clicked(false), onClick(onClick), panel(nullptr),
+      text(text) {
   };
   void click();
   void draw();
   void move(GLfloat x, GLfloat y) { this->x = x; this->y = y; };
   bool checkCollision(GLfloat x, GLfloat y);
 
+  string text;
   Panel* panel;
   GLfloat x, y;
   GLfloat sizeX, sizeY;
   bool clicked;
 private:
-  void (*onClick)(Button& thisBtn);
+  std::function<void(Button&)> onClick;
 };
 
 class Panel {
@@ -35,8 +40,7 @@ public:
   int findCollision(GLfloat x, GLfloat y);
 
   vector<Button> buttons;
-private:
-  GLfloat thickness;
-  Color color;
-  Orientation orientation;
+  const GLfloat thickness;
+  const Color color;
+  const Orientation orientation;
 };

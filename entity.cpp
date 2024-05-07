@@ -17,20 +17,35 @@ void GameEntity::move(GLfloat x, GLfloat y) {
 	this->y = y;
 }
 
-bool GameEntity::CheckCollision(shared_ptr<GameEntity> one, shared_ptr<GameEntity> two) { // AABB - AABB collision
-	bool collisionX = one->x + one->sizeX >= two->x && two->x + two->sizeX >= one->x;
-	bool collisionY = one->y + one->sizeY >= two->y && two->y + two->sizeY >= one->y;
-	return collisionX && collisionY;
+bool GameEntity::CheckCollision(shared_ptr<GameEntity> one, shared_ptr<GameEntity> two) { 
+		GLfloat xOffsetMult = .95;
+		GLfloat yOffsetMult = .8;
+	
+    GLfloat oneLeft = one->x - (one->sizeX * xOffsetMult);
+    GLfloat oneRight = one->x + (one->sizeX * xOffsetMult);
+    GLfloat oneTop = one->y + (one->sizeY * yOffsetMult);
+    GLfloat oneBottom = one->y - (one->sizeY * yOffsetMult);
+
+    GLfloat twoLeft = two->x - (two->sizeX * xOffsetMult);
+    GLfloat twoRight = two->x + (two->sizeX * xOffsetMult);
+    GLfloat twoTop = two->y + (two->sizeY * yOffsetMult);
+    GLfloat twoBottom = two->y - (two->sizeY * yOffsetMult);
+
+    bool collisionX = (oneLeft <= twoRight) && (oneRight >= twoLeft);
+    bool collisionY = (oneBottom <= twoTop) && (oneTop >= twoBottom);
+    
+    return collisionX && collisionY;
 }
 
 // -----------
 // RECTANGLE
 // -----------
 
-void Rectangle::draw(){
+void Rectangle::draw() {
 	glPushMatrix();
 
-	glTranslatef(x, y, z);
+	glTranslatef(x, y, 0);
+  glScalef(sizeX, sizeY, 1);
 	if (textureController.hasTexture()){
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 		glEnable(GL_TEXTURE_2D);
@@ -39,26 +54,26 @@ void Rectangle::draw(){
 		glBegin(GL_POLYGON);
 		{
 			glTexCoord2f(0.0, 0.0);
-			glVertex3f(-0.5, -0.5, 0);
+			glVertex2f(-1.0, -1.0);
 			glTexCoord2f(1.0, 0.0);
-			glVertex3f(0.5 + sizeX, -0.5, 0);
+			glVertex2f(1.0, -1.0);
 			glTexCoord2f(1.0, 1.0);
-			glVertex3f(0.5 + sizeX, 0.5 + sizeY, 0);
+			glVertex2f(1.0, 1.0);
 			glTexCoord2f(0.0, 1.0);
-			glVertex3f(-0.5, 0.5 + sizeY, 0);
+			glVertex2f(-1.0, 1.0);
 		}
 		glEnd();
 
 		glDisable(GL_TEXTURE_2D);		
 	}
 	else {
+		setColor(color);
 		glBegin(GL_POLYGON);
 		{
-			setColor(color);
-			glVertex3f(-0.5, -0.5, 0);
-			glVertex3f(0.5 + sizeX, -0.5, 0);
-			glVertex3f(0.5 + sizeX, 0.5 + sizeY, 0);
-			glVertex3f(-0.5, 0.5 + sizeY, 0);
+			glVertex2f(-1.0, -1.0);
+			glVertex2f(1.0, -1.0);
+			glVertex2f(1.0, 1.0);
+			glVertex2f(-1.0, 1.0);
 		}
 		glEnd();
 	}
@@ -98,7 +113,7 @@ int EntityContainer::findCollision(shared_ptr<GameEntity> checkedEntity) {
 // PARTICULARS
 // -----------
 
-shared_ptr<GameEntity> createPlayer(GLfloat x, GLfloat y){
+shared_ptr<GameEntity> createPlayer(GLfloat x, GLfloat y, GLfloat sizeX, GLfloat sizeY){
   vector<string> playerSprites({
     "sprite/nyan0.png",
     "sprite/nyan1.png",
@@ -106,9 +121,9 @@ shared_ptr<GameEntity> createPlayer(GLfloat x, GLfloat y){
     "sprite/nyan3.png",
   });
 
-	return std::make_shared<Rectangle>(x, y, 1, 1, playerSprites, 1);
+	return std::make_shared<Rectangle>(x, y, sizeX, sizeY, playerSprites, 50);
 }
 
-shared_ptr<GameEntity> createCollectible(GLfloat x, GLfloat y){
-  return std::make_shared<Rectangle>(x, y, .2, .2, vector<string>({"sprite/cookie.png"}), 1, Color::RED, 0, false);
+shared_ptr<GameEntity> createCollectible(GLfloat x, GLfloat y, GLfloat sizeX, GLfloat sizeY){
+  return std::make_shared<Rectangle>(x, y, sizeX, sizeY, vector<string>({"sprite/cookie.png"}), 1, Color::RED, 0, false);
 }

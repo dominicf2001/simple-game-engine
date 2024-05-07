@@ -11,15 +11,15 @@ using std::vector, std::shared_ptr, std::string;
 
 class GameEntity {
 public:
-	GLfloat x, y, z, sizeX, sizeY;
+	GLfloat x, y, sizeX, sizeY;
   GLfloat speed;
 	GLfloat mass;
   Color   color;
 	bool    isSolid;
 	bool    gravity;
 
-  GameEntity(GLfloat x=0, GLfloat y=0, GLfloat sizeX=0, GLfloat sizeY=0, vector<string> textures = vector<string>(), GLfloat speed=0, Color color=Color::BLUE, GLfloat mass=0, bool isSolid=true, bool gravity=true) 
-    : x(x), y(y), z(0), sizeX(sizeX), sizeY(sizeY), speed(speed), mass(mass), color(color), isSolid(isSolid), gravity(gravity), textureController(textures) {};
+  GameEntity(GLfloat x=0, GLfloat y=0, GLfloat sizeX=0, GLfloat sizeY=0, const vector<string>& textures = {}, GLfloat speed=0, Color color=Color::BLUE, GLfloat mass=0, bool isSolid=true, bool gravity=true) 
+    : x(x), y(y), sizeX(sizeX), sizeY(sizeY), speed(speed), mass(mass), color(color), isSolid(isSolid), gravity(gravity), textureController(textures) {};
 
   virtual void draw() = 0;
   void move(GLfloat, GLfloat);
@@ -42,9 +42,9 @@ public:
   void add(shared_ptr<GameEntity>);
   void remove(int);
   int  findCollision(shared_ptr<GameEntity>);
-private:
+
   vector<shared_ptr<GameEntity>> entities;
 };
 
-shared_ptr<GameEntity> createPlayer(GLfloat x=0, GLfloat y=0);
-shared_ptr<GameEntity> createCollectible(GLfloat x=0, GLfloat y=0);
+shared_ptr<GameEntity> createPlayer(GLfloat x, GLfloat y, GLfloat sizeX=50, GLfloat sizeY=50);
+shared_ptr<GameEntity> createCollectible(GLfloat x, GLfloat y, GLfloat sizeX=30, GLfloat sizeY=30);

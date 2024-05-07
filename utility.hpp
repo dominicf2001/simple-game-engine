@@ -6,13 +6,8 @@
 #include <vector>
 #include <string>
 
-#define MAIN_PANEL_W 600 // Width of the main panel
-#define SIDE_PANEL_W 200 // Width of each side panel
-#define MIDDLE_PANEL_H 600 // Height of middle panels
-#define BOTTOM_PANEL_H 200 // Height of the bottom panel
-#define TOP_PANEL_H 50 // Height of top panel
-#define WIN_W 1000 // Adjusted window width
-#define WIN_H 850 // Adjusted window height
+#define WIN_W 1200.0 // Adjusted window width
+#define WIN_H 1200.0 // Adjusted window height
 
 using std::vector, std::string;
 
@@ -29,7 +24,7 @@ struct DisplayState {
 
 class Camera {
 public:
-    void lookAt(GLfloat, GLfloat);
+    void lookAt(GLfloat, GLfloat, bool=false);
     GLfloat x = 0;
     GLfloat y = 0;
 };
@@ -59,7 +54,7 @@ struct Texture {
 
 class TextureController {
 public:
-  TextureController(vector<string>& textureFileNames);
+  TextureController(const vector<string>& textureFileNames);
   Texture getTexture();
   void addTexture(string textureFileName) { textures.push_back(Texture{.fileName = textureFileName}); };
   bool hasTexture(){ return !textures.empty(); };
